@@ -64,9 +64,17 @@ def validate_template(template):
 @app_commands.describe(prompt="Describe the server template")
 async def generate_template(interaction: discord.Interaction, prompt: str):
     await interaction.response.defer()
-    system_prompt = f"Generate a Discord server template in JSON format. Follow this structure: {json.dumps({'template': []})}. Use types: category, text-channel, voice-channel, forum-channel, announcement-channel, stage-channel. Replace spaces in names with '-'. Categories have a channels list. Only announcement-channel and stage-channel lack private key. Example: {json.dumps({'template': [{'type': 'text-channel', 'name': 'general', 'private': false}]})}"
+    system_prompt = f"""
+    Generate a Discord server template in JSON format, no backticks and no system text.
+    Follow this structure: {json.dumps({'template': []})}.
+    Use types: category, text-channel, voice-channel, forum-channel, announcement-channel, stage-channel.
+    Replace spaces in names with '-'.
+    Categories have a channels list.
+    Only announcement-channel and stage-channel lack private key.
+    Example: {json.dumps({'template': [{'type': 'text-channel', 'name': 'general', 'private': "(this is a boolean, false/true according to the channel)"}]})}
+    """
     response = together_client.chat.completions.create(
-        model="mistral",
+        model="meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": prompt}
@@ -109,6 +117,26 @@ async def apply_template(interaction: discord.Interaction, template_id: str):
         embed = discord.Embed(title="Error", description="You need Manage Channels permission. 😔", color=discord.Color.red())
         await interaction.followup.send(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
         return
+
+    # Delete all existing channels
+    try:
+        for channel in guild.channels:
+            try:
+                await channel.delete()
+            except discord.Forbidden:
+                embed = discord.Embed(title="Error", description=f"Missing permissions to delete {channel.name}. 😔", color=discord.Color.red())
+                await interaction.followup.send(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
+                return
+            except Exception as e:
+                embed = discord.Embed(title="Error", description=f"Error deleting {channel.name}: {str(e)} 😔", color=discord.Color.red())
+                await interaction.followup.send(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
+                return
+    except Exception as e:
+        embed = discord.Embed(title="Error", description=f"Error accessing channels: {str(e)} 😔", color=discord.Color.red())
+        await interaction.followup.send(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
+        return
+
+    # Apply new template
     template = template_data["template"]
     for item in template:
         try:
@@ -148,7 +176,7 @@ async def apply_template(interaction: discord.Interaction, template_id: str):
 async def help_command(interaction: discord.Interaction):
     embed = discord.Embed(title="Bot Commands", description="List of available commands 📜", color=discord.Color.blue())
     embed.add_field(name="/generate [prompt]", value="Generate a server template using AI based on the prompt. Returns a 10-digit hex ID. 🎉", inline=False)
-    embed.add_field(name="/apply [template_id]", value="Apply a server template using its 10-digit hex ID. Creates channels and categories. 🔧", inline=False)
+    embed.add_field(name="/apply [template_id]", value="Apply a server template using its 10-digit hex ID. Deletes existing channels and creates new ones. 🔧", inline=False)
     embed.add_field(name="/help", value="Show this help message. 📖", inline=False)
     await interaction.response.send_message(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
 
