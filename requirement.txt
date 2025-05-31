@@ -1,0 +1,5 @@
+py-cord
+pymongo
+together
+flask
+gunicorn

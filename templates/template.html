@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template {{ template_id }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .discord-sidebar {
+            background-color: #2f3136;
+            color: #b9bbbe;
+            width: 240px;
+            min-height: 100vh;
+            padding: 10px;
+            font-family: 'Arial', sans-serif;
+        }
+        .category {
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: bold;
+            color: #8e9297;
+            margin: 10px 0 5px;
+        }
+        .channel {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            font-size: 14px;
+            color: #b9bbbe;
+        }
+        .channel-icon::before {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            background-size: cover;
+        }
+        .text-channel::before {
+            content: '#';
+            font-weight: bold;
+        }
+        .voice-channel::before {
+            content: '🔊';
+        }
+        .forum-channel::before {
+            content: '📋';
+        }
+        .announcement-channel::before {
+            content: '📢';
+        }
+        .stage-channel::before {
+            content: '🎤';
+        }
+        .private::after {
+            content: '🔒';
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body class="bg-gray-800">
+    <div class="discord-sidebar">
+        <h2 class="text-white text-lg font-bold mb-4">Template {{ template_id }}</h2>
+        <div id="template-content">
+            <!-- Template will be rendered here -->
+        </div>
+    </div>
+    <script>
+        const template = {{ template | tojson | safe }};
+        const container = document.getElementById('template-content');
+
+        template.forEach(item => {
+            if (item.type === 'category') {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'category';
+                categoryDiv.textContent = item.name + (item.private ? ' 🔒' : '');
+                container.appendChild(categoryDiv);
+                item.channels?.forEach(channel => {
+                    const channelDiv = document.createElement('div');
+                    channelDiv.className = `channel ${channel.type}${channel.private && channel.type !== 'announcement-channel' && channel.type !== 'stage-channel' ? ' private' : ''}`;
+                    channelDiv.innerHTML = `<span class="channel-icon"></span>${channel.name}`;
+                    container.appendChild(channelDiv);
+                });
+            } else {
+                const channelDiv = document.createElement('div');
+                channelDiv.className = `channel ${item.type}${item.private && item.type !== 'announcement-channel' && item.type !== 'stage-channel' ? ' private' : ''}`;
+                channelDiv.innerHTML = `<span class="channel-icon"></span>${item.name}`;
+                container.appendChild(channelDiv);
+            }
+        });
+    </script>
+</body>
+</html>
