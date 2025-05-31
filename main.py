@@ -74,7 +74,7 @@ async def generate_template(interaction: discord.Interaction, prompt: str):
     Example: {json.dumps({'template': [{'type': 'text-channel', 'name': 'general', 'private': "(this is a boolean, false/true according to the channel)"}]})}
     """
     response = together_client.chat.completions.create(
-        model="mistral",
+        model="meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": prompt}
