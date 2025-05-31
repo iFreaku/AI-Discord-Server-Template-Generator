@@ -64,7 +64,15 @@ def validate_template(template):
 @app_commands.describe(prompt="Describe the server template")
 async def generate_template(interaction: discord.Interaction, prompt: str):
     await interaction.response.defer()
-    system_prompt = f"Generate a Discord server template in JSON format. Follow this structure: {json.dumps({'template': []})}. Use types: category, text-channel, voice-channel, forum-channel, announcement-channel, stage-channel. Replace spaces in names with '-'. Categories have a channels list. Only announcement-channel and stage-channel lack private key. Example: {json.dumps({'template': [{'type': 'text-channel', 'name': 'general', 'private': false}]})}"
+    system_prompt = f"""
+    Generate a Discord server template in JSON format, no backticks and no system text.
+    Follow this structure: {json.dumps({'template': []})}.
+    Use types: category, text-channel, voice-channel, forum-channel, announcement-channel, stage-channel.
+    Replace spaces in names with '-'.
+    Categories have a channels list.
+    Only announcement-channel and stage-channel lack private key.
+    Example: {json.dumps({'template': [{'type': 'text-channel', 'name': 'general', 'private': "(this is a boolean, false/true according to the channel)"}]})}
+    """
     response = together_client.chat.completions.create(
         model="mistral",
         messages=[
