@@ -64,17 +64,9 @@ def validate_template(template):
 @app_commands.describe(prompt="Describe the server template")
 async def generate_template(interaction: discord.Interaction, prompt: str):
     await interaction.response.defer()
-    system_prompt = f"""
-    Generate a Discord server template in JSON format, no backticks and no system text.
-    Follow this structure: {json.dumps({'template': []})}.
-    Use types: category, text-channel, voice-channel, forum-channel, announcement-channel, stage-channel.
-    Replace spaces in names with '-'.
-    Categories have a channels list.
-    Only announcement-channel and stage-channel lack private key.
-    Example: {json.dumps({'template': [{'type': 'text-channel', 'name': 'general', 'private': "(this is a boolean, false/true according to the channel)"}]})}
-    """
+    system_prompt = f"Generate a Discord server template in JSON format. Follow this structure: {json.dumps({'template': []})}. Use types: category, text-channel, voice-channel, forum-channel, announcement-channel, stage-channel. Replace spaces in names with '-'. Categories have a channels list. Only announcement-channel and stage-channel lack private key. Example: {json.dumps({'template': [{'type': 'text-channel', 'name': 'general', 'private': false}]})}"
     response = together_client.chat.completions.create(
-        model="meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
+        model="mistral",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": prompt}
@@ -120,11 +112,11 @@ async def apply_template(interaction: discord.Interaction, template_id: str):
     template = template_data["template"]
     for item in template:
         try:
-            overwrites = {guild.default_role: discord.PermissionOverwrite(view_channel=not item.get("private", False))} if item.get("private", False) and item["type"] not in {"announcement-channel", "stage-channel"} else None
+            overwrites = {guild.default_role: discord.PermissionOverwrite(view_channel=not item.get("private", False))} if item.get("private", False) and item["type"] not in {"announcement-channel", "stage-channel"} else {}
             if item["type"] == "category":
                 category = await guild.create_category(item["name"], overwrites=overwrites)
                 for channel in item.get("channels", []):
-                    channel_overwrites = {guild.default_role: discord.PermissionOverwrite(view_channel=not channel.get("private", False))} if channel.get("private", False) else None
+                    channel_overwrites = {guild.default_role: discord.PermissionOverwrite(view_channel=not channel.get("private", False))} if channel.get("private", False) and channel["type"] not in {"announcement-channel", "stage-channel"} else {}
                     if channel["type"] == "text-channel":
                         await guild.create_text_channel(channel["name"], category=category, overwrites=channel_overwrites)
                     elif channel["type"] == "voice-channel":
@@ -132,9 +124,9 @@ async def apply_template(interaction: discord.Interaction, template_id: str):
                     elif channel["type"] == "forum-channel":
                         await guild.create_forum(channel["name"], category=category, overwrites=channel_overwrites)
                     elif channel["type"] == "announcement-channel":
-                        await guild.create_text_channel(channel["name"], category=category, news=True)
+                        await guild.create_text_channel(channel["name"], category=category, news=True, overwrites=channel_overwrites)
                     elif channel["type"] == "stage-channel":
-                        await guild.create_stage_channel(channel["name"], category=category)
+                        await guild.create_stage_channel(channel["name"], category=category, overwrites=channel_overwrites)
             elif item["type"] == "text-channel":
                 await guild.create_text_channel(item["name"], overwrites=overwrites)
             elif item["type"] == "voice-channel":
@@ -142,9 +134,9 @@ async def apply_template(interaction: discord.Interaction, template_id: str):
             elif item["type"] == "forum-channel":
                 await guild.create_forum(item["name"], overwrites=overwrites)
             elif item["type"] == "announcement-channel":
-                await guild.create_text_channel(item["name"], news=True)
+                await guild.create_text_channel(item["name"], news=True, overwrites=overwrites)
             elif item["type"] == "stage-channel":
-                await guild.create_stage_channel(item["name"])
+                await guild.create_stage_channel(item["name"], overwrites=overwrites)
         except Exception as e:
             embed = discord.Embed(title="Error", description=f"Error creating {item['name']}: {str(e)} 😔", color=discord.Color.red())
             await interaction.followup.send(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
