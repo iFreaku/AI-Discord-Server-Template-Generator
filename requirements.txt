@@ -1,4 +1,4 @@
-py-cord
+py-cord>=2.6.1
 pymongo
 together
 flask
