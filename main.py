@@ -48,14 +48,15 @@ def validate_template(template):
                     return False
                 if "name" not in channel or not isinstance(channel["name"], str):
                     return False
-                if " " in channel["name"]:
-                    return False
+                # Replace spaces with hyphens in channel names
+                channel["name"] = channel["name"].replace(" ", "-")
                 if channel["type"] not in {"announcement-channel", "stage-channel"} and "private" not in channel:
                     return False
         if "name" not in item or not isinstance(item["name"], str):
             return False
-        if " " in item["name"]:
-            return False
+        # Replace spaces with hyphens for non-category, non-announcement/stage channel names
+        if item["type"] != "category" and item["type"] not in {"announcement-channel", "stage-channel"}:
+            item["name"] = item["name"].replace(" ", "-")
         if item["type"] != "category" and item["type"] not in {"announcement-channel", "stage-channel"} and "private" not in item:
             return False
     return True
