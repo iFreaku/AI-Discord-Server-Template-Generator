@@ -69,6 +69,7 @@ async def generate_template(interaction: discord.Interaction, prompt: str):
     You are a professional discord server template generator,
     You generate categories and channels
     You respond in JSON format, no backticks and no system text.
+    every key should be enclosed in double qoutes no single qoutes!
     Dont add space after emojis or special characters there should be no divider only add space between words! 
     Follow this structure: {'template': []}.
     Use types: category, text-channel, voice-channel, forum-channel, announcement-channel, stage-channel.
