@@ -149,7 +149,7 @@ async def generate_template(interaction: discord.Interaction, prompt: str):
             {"role": "system", "content": system_prompt},
             {
                 "role": "user",
-                "content": prompt+"""
+                "content": "Prompt: "+prompt+""".
                 List of special characters to use when creating aesthetic or grudge themed servers (You can even combine different characters, eg: 「★」 ):
     Brackets & Enclosures
     - Curly Brackets: ꒰, ꒱, 𓆩, 𓆪
