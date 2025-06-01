@@ -78,7 +78,7 @@ async def generate_template(interaction: discord.Interaction, prompt: str):
     Each type of channel and category should be easily distinguishable.
     Categories have a channels list.
     Only announcement-channel and stage-channel lack private key.
-    Example:
+    Example(This is how you use the types and create a template, but dont use this same format when generating a template!!):
     {
         "template": [
             {
