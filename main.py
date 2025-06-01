@@ -121,19 +121,15 @@ async def apply_template(interaction: discord.Interaction, template_id: str):
         await interaction.followup.send(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
         return
 
-    # Delete all existing channels
+    # Delete all existing channels, skipping those that cannot be deleted
+    skipped_channels = []
     try:
         for channel in guild.channels:
             try:
                 await channel.delete()
-            except discord.Forbidden:
-                embed = discord.Embed(title="Error", description=f"Missing permissions to delete {channel.name}. 😔", color=discord.Color.red())
-                await interaction.followup.send(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
-                return
-            except Exception as e:
-                embed = discord.Embed(title="Error", description=f"Error deleting {channel.name}: {str(e)} 😔", color=discord.Color.red())
-                await interaction.followup.send(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
-                return
+            except (discord.Forbidden, discord.HTTPException):
+                skipped_channels.append(channel.name)
+                continue  # Skip channels that can't be deleted (e.g., system or community channels)
     except Exception as e:
         embed = discord.Embed(title="Error", description=f"Error accessing channels: {str(e)} 😔", color=discord.Color.red())
         await interaction.followup.send(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
@@ -172,14 +168,19 @@ async def apply_template(interaction: discord.Interaction, template_id: str):
             embed = discord.Embed(title="Error", description=f"Error creating {item['name']}: {str(e)} 😔", color=discord.Color.red())
             await interaction.followup.send(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
             return
-    embed = discord.Embed(title="Template Applied", description=f"Template `{template_id}` applied successfully! 🎉", color=discord.Color.green())
+
+    # Report skipped channels, if any
+    description = f"Template `{template_id}` applied successfully! 🎉"
+    if skipped_channels:
+        description += f"\nSkipped undeletable channels: {', '.join(skipped_channels)}"
+    embed = discord.Embed(title="Template Applied", description=description, color=discord.Color.green())
     await interaction.followup.send(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
 
 @tree.command(name="help", description="Show available commands")
 async def help_command(interaction: discord.Interaction):
     embed = discord.Embed(title="Bot Commands", description="List of available commands 📜", color=discord.Color.blue())
     embed.add_field(name="/generate [prompt]", value="Generate a server template using AI based on the prompt. Returns a 10-digit hex ID. 🎉", inline=False)
-    embed.add_field(name="/apply [template_id]", value="Apply a server template using its 10-digit hex ID. Deletes existing channels and creates new ones. 🔧", inline=False)
+    embed.add_field(name="/apply [template_id]", value="Apply a server template using its 10-digit hex ID. Deletes existing channels (skipping undeletable ones) and creates new ones. 🔧", inline=False)
     embed.add_field(name="/help", value="Show this help message. 📖", inline=False)
     await interaction.response.send_message(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
 
