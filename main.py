@@ -73,47 +73,6 @@ async def generate_template(interaction: discord.Interaction, prompt: str):
     Use types: category, text-channel, voice-channel, forum-channel, announcement-channel, stage-channel.
     You can use sepcial characters for designing the names of the categoreis and channels only when said by the user or asked for aesthetic or grudge or any other related themes!
     You can use emojis for designing the names of the categoreis and channels only when said by the user!
-    List of special characters to use when creating aesthetic or grudge themed servers (You can even combine different characters, eg: 「★」 ):
-    Brackets & Enclosures
-    These symbols are often used to frame or highlight content.
-    - Curly Brackets: ꒰, ꒱, 𓆩, 𓆪
-    - Angle Brackets: ‹, ›, ❰, ❱, ⟢, ⟣
-    - Square Brackets: 【, 】, 「, 」
-    - Parentheses: (, ), （）
-    - Other Enclosures: ⟡, ⟢, ⟣, ⪩, ⪨, ⩇
-
-    Symbols & Icons
-    These characters represent various symbols and icons used for decoration or emphasis.
-    - Stars & Asterisks: ☆, ★, ✩, ✰, ✦, ✧, ✶, ✷, ✸, ✹, ✺, ✻, ✼, ✽, ✾, ✿, ❀
-    - Hearts: ♡, ♥︎, ❥, ❣, ❤, 💖, 💗, 💘, 💝
-    - Arrows: ➜, ➤, ➔, ➮, ↝, ↠, ↣, ↦, ↩, ↪, ↷, ↺, ⇆, ⇅, ⇄, ⇵
-    - Lines & Dividers: ┆, ┊, │, ┃, ╭, ╰, ╯, ╮, ─, ━, ⎯, ⎙, ⎚
-    - Miscellaneous Symbols: ⌕, ⌗, ⌇, ⌔, ⌀, ⨳, ⭓, ⭔, ⿻, ⿴, ⿸, ⿶, ⧅, ⧉, ⧫, ⧬, ⧭, ⧮, ⧯
-
-    Musical & Emotive Symbols
-    Symbols representing emotions, music, and other expressive elements.
-    - Musical Notes: ♫, ♪, ♩, ♬, ♭, ♯, 𝄞
-    - Faces & Emoticons: ☻, ☹, ☺, シ, ツ, ت, ʬʬ, ˃̵ᴗ˂̵, ˃ᴗ˂, ˃ᗜ˂, ^..^, ˘ᗜ˘, ᵔᴗᵔ, ･ᴗ･, ˃̵ᴗ˂̵, ˃ᗜ˂, ˃̵ᴗ˂̵, ˃ᗜ˂, ˃̵ᴗ˂̵, ˃ᗜ˂
-    - Religious & Spiritual Symbols: ✞, ☪, ☮, ☯, ☸, ✡, ☦, ☥
-
-    Shapes & Geometric Symbols
-    Various geometric shapes used for design and decoration.
-    - Circles & Ellipses: ◌, ◍, ◐, ◑, ◒, ◓, ◔, ◕, ◖, ◗, ◉, ◯, 〇, ◎
-    - Triangles: △, ▲, ▽, ▼, ⟁, ⧊, ⧋, ⧌, ⧍, ⧎, ⧏
-    - Squares & Rectangles: □, ■, ▣, ▤, ▥, ▦, ▧, ▨, ▩, ▪, ▫, ◽, ◾, ◻, ◼
-    - Stars & Asterisks: ✱, ✲, ✳, ✴, ✵, ✶, ✷, ✸, ✹, ✺, ✻, ✼, ✽, ✾, ✿, ❀
-
-    Mathematical & Technical Symbols
-    Symbols commonly used in mathematical and technical contexts.
-    - Operators & Relations: ∞, ∝, ≧, ≦, ≠, ≈, ≅, ≃, ≡, ≤, ≥, ∑, ∏, ∐, ∂, ∇, ∈, ∉, ∋, ∌, ∅, ∩, ∪, ⊂, ⊃, ⊆, ⊇, ⊈, ⊉, ⊊, ⊋
-    - Arrows: →, ←, ↑, ↓, ↔, ↕, ⇄, ⇅, ⇆, ⇇, ⇈, ⇉, ⇊, ⇋, ⇌, ⇍, ⇎, ⇏, ⇐, ⇑, ⇒, ⇓, ⇔, ⇕, ⇖, ⇗, ⇘, ⇙, ⇚, ⇛, ⇜, ⇝, ⇞, ⇟, ⇠, ⇡, ⇢, ⇣, ⇤, ⇥, ⇦, ⇧, ⇨, ⇩, ⇪
-    - Miscellaneous: °, ˚, ˙, ˘, ˜, ¯, ˛, ˝, ˇ, ˆ, ˉ, ˋ, ˊ, ˎ, ˍ, ˏ, ː, ˑ, ˒, ˓, ˔, ˕, ˖, ˗, ˘, ˙, ˚, ˛, ˜, ˝
-
-    Decorative & Aesthetic Symbols
-    Symbols primarily used for decorative purposes in text art and design.
-    - Floral & Nature: ꕤ, ꔠ, ꕀ, ❀, ✿, ❁, ❃, ❋, ❊, ❂, ❆, ❄, ❅, ❇, ❈, ❉,, ❏, ❐, ❑, ❒
-    - Lines & Dividers: ⋆, ⋄, ⋅, ⋇, ⋈, ⋉, ⋊, ⋋, ⋌, ⋍, ⋎, ⋏, ⋐, ⋑, ⋒, ⋓, ⋔, ⋕, ⋖, ⋗, ⋘, ⋙, ⋚, ⋛, ⋜, ⋝, ⋞, ⋟, ⋠, ⋡, ⋢, ⋣, ⋤, ⋥, ⋦, ⋧, ⋨, ⋩, ⋪, ⋫, ⋬, ⋭, ⋮, ⋯, ⋰, ⋱, ⋲, ⋳, ⋴, ⋵, ⋶, ⋷, ⋸, ⋹, ⋺, ⋻, ⋼, ⋽, ⋾, ⋿
-    - Miscellaneous: ꗃ, ꗄ, ꗅ, ꗆ, ꗇ, ꗈ, ꗉ, ꗊ, ꗋ, ꗌ, ꗍ, ꗎ, ꗏ, ꗐ, ꗑ, ꗒ, ꗓ, ꗔ, ꗕ, ꗖ, ꗗ, ꗘ, ꗙ, ꗚ, ꗛ, ꗜ, ꗝ, ꗞ, ꗟ, ꗠ, ꗡ, ꗢ, ꗣ, ꗤ, ꗥ, ꗦ, ꗧ, `ꗨ
     Categories have a channels list.
     Only announcement-channel and stage-channel lack private key.
     Example:
@@ -188,12 +147,45 @@ async def generate_template(interaction: discord.Interaction, prompt: str):
         model="meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
         messages=[
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": prompt}
+            {
+                "role": "user",
+                "content": prompt+"""
+                List of special characters to use when creating aesthetic or grudge themed servers (You can even combine different characters, eg: 「★」 ):
+    Brackets & Enclosures
+    - Curly Brackets: ꒰, ꒱, 𓆩, 𓆪
+    - Angle Brackets: ‹, ›, ❰, ❱, ⟢, ⟣
+    - Square Brackets: 【, 】, 「, 」
+    - Parentheses: (, ), （）
+    - Other Enclosures: ⟡, ⟢, ⟣, ⪩, ⪨, ⩇
+    Symbols & Icons
+    - Stars & Asterisks: ☆, ★, ✩, ✰, ✦, ✧, ✱, ✲, ✳, ✴, ✵, ✶, ✷, ✸, ✹, ✺, ✻, ✼, ✽, ✾, ✿, ❀
+    - Hearts: ♡, ♥︎, ❥, ❣, ❤, 💖, 💗, 💘, 💝
+    - Arrows: ➜, ➤, ➔, ➮, ↝, ↠, ↣, ↦, ↩, ↪, ↷, ↺, ⇆, ⇅, ⇄, ⇵, →, ←, ↑, ↓, ↔, ↕, ⇇, ⇈, ⇉, ⇊, ⇋, ⇌, ⇍, ⇎, ⇏, ⇐, ⇑, ⇒, ⇓, ⇔, ⇕, ⇖, ⇗, ⇘, ⇙, ⇚, ⇛, ⇜, ⇝, ⇞, ⇟, ⇠, ⇡, ⇢, ⇣, ⇤, ⇥, ⇦, ⇧, ⇨, ⇩, ⇪
+    - Lines & Dividers: ┆, ┊, │, ┃, ╭, ╰, ╯, ╮, ─, ━, ⎯, ⎙, ⎚
+    - Miscellaneous Symbols: ⌕, ⌗, ⌇, ⌔, ⌀, ⨳, ⭓, ⭔, ⿻, ⿴, ⿸, ⿶, ⧅, ⧉, ⧫, ⧬, ⧭, ⧮, ⧯
+    Musical & Emotive Symbols
+    - Musical Notes: ♫, ♪, ♩, ♬, ♭, ♯, 𝄞
+    - Faces & Emoticons: ☻, ☹, ☺, シ, ツ, ت, ʬʬ, ˃̵ᴗ˂̵, ˃ᴗ˂, ˃ᗜ˂, ^..^, ˘ᗜ˘, ᵔᴗᵔ, ･ᴗ･, ˃̵ᴗ˂̵, ˃ᗜ˂, ˃̵ᴗ˂̵, ˃ᗜ˂, ˃̵ᴗ˂̵, ˃ᗜ˂
+    - Religious & Spiritual Symbols: ✞, ☪, ☮, ☯, ☸, ✡, ☦, ☥
+    Shapes & Geometric Symbols
+    - Circles & Ellipses: ◌, ◍, ◐, ◑, ◒, ◓, ◔, ◕, ◖, ◗, ◉, ◯, 〇, ◎
+    - Triangles: △, ▲, ▽, ▼, ⟁, ⧊, ⧋, ⧌, ⧍, ⧎, ⧏
+    - Squares & Rectangles: □, ■, ▣, ▤, ▥, ▦, ▧, ▨, ▩, ▪, ▫, ◽, ◾, ◻, ◼
+    Mathematical & Technical Symbols
+    - Operators & Relations: ∞, ∝, ≧, ≦, ≠, ≈, ≅, ≃, ≡, ≤, ≥, ∑, ∏, ∐, ∂, ∇, ∈, ∉, ∋, ∌, ∅, ∩, ∪, ⊂, ⊃, ⊆, ⊇, ⊈, ⊉, ⊊, ⊋
+    - Miscellaneous: °, ˚, ˙, ˘, ˜, ¯, ˛, ˝, ˇ, ˆ, ˉ, ˋ, ˊ, ˎ, ˍ, ˏ, ː, ˑ, ˒, ˓, ˔, ˕, ˖, ˗, ˘, ˙, ˚, ˛, ˜, ˝
+    Decorative & Aesthetic Symbols
+    - Floral & Nature: ꕤ, ꔠ, ꕀ, ❀, ✿, ❁, ❃, ❋, ❊, ❂, ❆, ❄, ❅, ❇, ❈, ❉,, ❏, ❐, ❑, ❒
+    - Lines & Dividers: ⋆, ⋄, ⋅, ⋇, ⋈, ⋉, ⋊, ⋋, ⋌, ⋍, ⋎, ⋏, ⋐, ⋑, ⋒, ⋓, ⋔, ⋕, ⋖, ⋗, ⋘, ⋙, ⋚, ⋛, ⋜, ⋝, ⋞, ⋟, ⋠, ⋡, ⋢, ⋣, ⋤, ⋥, ⋦, ⋧, ⋨, ⋩, ⋪, ⋫, ⋬, ⋭, ⋮, ⋯, ⋰, ⋱, ⋲, ⋳, ⋴, ⋵, ⋶, ⋷, ⋸, ⋹, ⋺, ⋻, ⋼, ⋽, ⋾, ⋿
+    - Miscellaneous: ꗃ, ꗄ, ꗅ, ꗆ, ꗇ, ꗈ, ꗉ, ꗊ, ꗋ, ꗌ, ꗍ, ꗎ, ꗏ, ꗐ, ꗑ, ꗒ, ꗓ, ꗔ, ꗕ, ꗖ, ꗗ, ꗘ, ꗙ, ꗚ, ꗛ, ꗜ, ꗝ, ꗞ, ꗟ, ꗠ, ꗡ, ꗢ, ꗣ, ꗤ, ꗥ, ꗦ, ꗧ, `ꗨ
+                """
+            }
         ]
     )
+    res = response.choices[0].message.content
+    print(res)
     try:
-        template_json = json.loads(response.choices[0].message.content)
-        print(template_json)
+        template_json = json.loads(res)
     except (json.JSONDecodeError, AttributeError) as e:
         embed = discord.Embed(title="Error", description="Invalid template format from AI. 😕", color=discord.Color.red())
         embed.add_field(name="Error:", value=e, inline=False)
