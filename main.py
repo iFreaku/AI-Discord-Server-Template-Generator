@@ -64,11 +64,11 @@ def validate_template(template):
 @app_commands.describe(prompt="Describe the server template")
 async def generate_template(interaction: discord.Interaction, prompt: str):
     await interaction.response.defer()
-    system_prompt = f"""
+    system_prompt = """
     You are a professional discord server template generator,
     You generate categories and channels
     You respond in JSON format, no backticks and no system text.
-    Follow this structure: {json.dumps({'template': []})}.
+    Follow this structure: {'template': []}.
     Use types: category, text-channel, voice-channel, forum-channel, announcement-channel, stage-channel.
     Replace spaces in names with '-'.
     You can use sepcial characters for designing the names of the categoreis and channels only when said by the user!
@@ -81,71 +81,71 @@ async def generate_template(interaction: discord.Interaction, prompt: str):
     Only announcement-channel and stage-channel lack private key.
     Example:
     {
-        "template": [
+        template: [
             {
-            "type": "announcement-channel",
-            "name": "server-announcements"
+            type: announcement-channel,
+            name: server-announcements
             },
             {
-            "type": "stage-channel",
-            "name": "music-events"
+            type: stage-channel,
+            name: music-events
             },
             {
-            "type": "category",
-            "name": "Community",
-            "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)',
-            "channels": [
+            type: category,
+            name: Community,
+            private: (false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false),
+            channels: [
                 {
-                "type": "text-channel",
-                "name": "general",
-                "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)'
+                type: text-channel,
+                name: general,
+                private: (false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)
                 },
                 {
-                "type": "text-channel",
-                "name": "admin-general",
-                "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be true)'
+                type: text-channel,
+                name: admin-general,
+                private: (false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be true)
                 },
                 {
-                "type": "forum-channel",
-                "name": "general-forum",
-                "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)'
+                type: forum-channel,
+                name: general-forum,
+                private: (false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)
                 },
                 {
-                "type": "forum-channel",
-                "name": "admin-general-forum",
-                "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be true)'
+                type: forum-channel,
+                name: admin-general-forum,
+                private: (false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be true)
                 }
             ]
             },
             {
-            "type": "category",
-            "name": "Voice Channels",
-            "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)',
-            "channels": [
+            type: category,
+            name: Voice Channels,
+            private: (false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false),
+            channels: [
                 {
-                "type": "voice-channel",
-                "name": "general-vc",
-                "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)'
+                type: voice-channel,
+                name: general-vc,
+                private: (false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)
                 },
                 {
-                "type": "voice-channel",
-                "name": "admin-general-vc",
-                "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be true)'
+                type: voice-channel,
+                name: admin-general-vc,
+                private: (false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be true)
                 }
             ]
             },
             {
-            "type": "text-channel",
-            "name": "public-stuff",
-            "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)'
+            type: text-channel,
+            name: public-stuff,
+            private: (false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)
             },
             {
-            "type": "text-channel",
-            "name": "private-stuff",
-            "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be true)'
+            type: text-channel,
+            name: private-stuff,
+            private: (false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be true)
             }
         ]
-        }
+    }
     """
     response = together_client.chat.completions.create(
         model="meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
