@@ -71,7 +71,7 @@ async def generate_template(interaction: discord.Interaction, prompt: str):
     Follow this structure: {'template': []}.
     Use types: category, text-channel, voice-channel, forum-channel, announcement-channel, stage-channel.
     Replace spaces in names with '-'.
-    You can use sepcial characters for designing the names of the categoreis and channels only when said by the user!
+    You can use sepcial characters for designing the names of the categoreis and channels only when said by the user or asked for aesthetic or grudge or any other related themes!
     You can use emojis for designing the names of the categoreis and channels only when said by the user!
     List of some special characters to use when creating aesthetic or grudge themed servers (You can even combine different characters, eg: 「★, and no need to give space/hyphen after special characters or emojis only between words! ):
     ୨୧ 𖧧 ﹕ ﹌﹫ ꒰ ꒱𑁯𓂅 𓏲 ⌕ ┆∿ ・. ˚ ꒷♡̷̷ ˖ ࣪ ˒ ꗃ ⟭⟬ 𓈈 ‹𝟹 ⌗ ┊: 𓄹 ᕬ 🗒 ﹌ ꗃ 𓂃 𓍯 ꒦꒷ ⿻ 𓏲ּ ֶָ֢ ∞  ⎙ 𓆤 𓂃୭̥ ᘏ ⑅ ᘏ ♡⊹ ° . ˚  · ° . ♡ ⊹ ◌ ❛❜ ⋆ ♥︎ ꧕  ⪧ ꕤ. ⸾ ⸽  | ┊ ✉ ♡ ⊹ ★꒷ ᵎᵎ ₊ ◌𑀈. ♡ - ̗̀໒ ⋮ ➮ ⨾ ்⋆ ⬚ (˶ᵔᴗᵔ˶ ˀˀ ୨୧ ❛ ❜ ʚ ɞ ✦ ♥︎ ∞ ☾ ☽ ♫ ♪ ✞ シ ت ♡ ఌ  ᴥ ☻ 𑁍  ★ ☆ ✰ 𝟭 𝟮 𝟯 𝟰 𝟱 𝟲 𝟳 𝟴 𝟵 𝟬 . ₊ ༝ ･ ˖ ₊ ˚ 。 . ⋆    ༻ ༺ . ⸼۰ ۪۪۫۫ = ،، ⏧ ·₊̣̇. ⊱ ⊰ ∝ 组 ೄ ಇ බ ※ ⿻ ۬ ⪧ ໒ ː ͡ ︶ ՞ 〃  ᵎ ⏟ ⏝ ꦿ ۫։ຼ ೃ ೀ ෞ 。ꞈ ￤ ゛ރ ▿ ▾ ⌀ ଽ  ⌔  〻〼
