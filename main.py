@@ -168,7 +168,7 @@ async def generate_template(interaction: discord.Interaction, prompt: str):
     templates_collection.insert_one({"id": hex_id, "template": template_json["template"]})
     embed = discord.Embed(title="Template Generated", color=discord.Color.green())
     embed.add_field(name="Prompt 💬", value=prompt, inline=False)
-    embed.add_field(name="Template ID 🆔", value=f"`{hex_id}`", inline=False)
+    embed.add_field(name="Template ID 🆔", value=hex_id", inline=False)
     embed.add_field(name="Preview 👀", value=f"https://stgai.onrender.com/template/{hex_id}", inline=False)
     await interaction.followup.send(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
 
