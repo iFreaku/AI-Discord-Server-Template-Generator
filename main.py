@@ -65,13 +65,87 @@ def validate_template(template):
 async def generate_template(interaction: discord.Interaction, prompt: str):
     await interaction.response.defer()
     system_prompt = f"""
-    Generate a Discord server template in JSON format, no backticks and no system text.
+    You are a professional discord server template generator,
+    You generate categories and channels
+    You respond in JSON format, no backticks and no system text.
     Follow this structure: {json.dumps({'template': []})}.
     Use types: category, text-channel, voice-channel, forum-channel, announcement-channel, stage-channel.
     Replace spaces in names with '-'.
+    You can use sepcial characters for designing the names of the categoreis and channels only when said by the user!
+    You can use emojis for designing the names of the categoreis and channels only when said by the user!
+    List of some special characters to use when creating aesthetic or grudge themed servers (You can even combine different characters, eg: 「★, and no need to give space/hyphen after special characters or emojis only between words! ):
+    ୨୧ 𖧧 ﹕ ﹌﹫ ꒰ ꒱𑁯𓂅 𓏲 ⌕ ┆∿ ・. ˚ ꒷♡̷̷ ˖ ࣪ ˒ ꗃ ⟭⟬ 𓈈 ‹𝟹 ⌗ ┊: 𓄹 ᕬ 🗒 ﹌ ꗃ 𓂃 𓍯 ꒦꒷ ⿻ 𓏲ּ ֶָ֢ ∞  ⎙ 𓆤 𓂃୭̥ ᘏ ⑅ ᘏ ♡⊹ ° . ˚  · ° . ♡ ⊹ ◌ ❛❜ ⋆ ♥︎ ꧕  ⪧ ꕤ. ⸾ ⸽  | ┊ ✉ ♡ ⊹ ★꒷ ᵎᵎ ₊ ◌𑀈. ♡ - ̗̀໒ ⋮ ➮ ⨾ ்⋆ ⬚ (˶ᵔᴗᵔ˶ ˀˀ ୨୧ ❛ ❜ ʚ ɞ ✦ ♥︎ ∞ ☾ ☽ ♫ ♪ ✞ シ ت ♡ ఌ  ᴥ ☻ 𑁍  ★ ☆ ✰ 𝟭 𝟮 𝟯 𝟰 𝟱 𝟲 𝟳 𝟴 𝟵 𝟬 . ₊ ༝ ･ ˖ ₊ ˚ 。 . ⋆    ༻ ༺ . ⸼۰ ۪۪۫۫ = ،، ⏧ ·₊̣̇. ⊱ ⊰ ∝ 组 ೄ ಇ බ ※ ⿻ ۬ ⪧ ໒ ː ͡ ︶ ՞ 〃  ᵎ ⏟ ⏝ ꦿ ۫։ຼ ೃ ೀ ෞ 。ꞈ ￤ ゛ރ ▿ ▾ ⌀ ଽ  ⌔  〻〼
+    ﹒ʬʬ﹒⪩⪨﹒⟡﹒ᐢ..ᐢ﹒◖﹒⇅﹒○﹒✿﹒⊹﹒∇﹒✸﹒⟢﹒❀﹒ᵔᴗᵔ﹒♡﹒〇﹒ıllı﹒ᶻz﹒⊂⊃﹒␥﹒⿸﹒ꔠ﹒✶﹒◍﹒▿﹒⤸﹒⬚﹒៶៸﹒△﹒→﹒✶﹒（）﹒▥﹒▤﹒▦﹒▧﹒▨﹒▩﹒░﹒▒﹒▓﹒⿴﹒◫﹒⬚﹒▣﹒≧≦﹒ㄑ﹒⎙﹒➜﹒★﹒⨳﹒✿﹒❀﹒✶﹒✸﹕☆﹒◐﹒◉ ﹒◖◗﹒▽﹒ᶻz﹒‹𝟹﹒♡﹒ᐢ..ᐢ﹒﹫﹒⿴﹒→﹒☓﹕ᵔᴗᵔ﹒⺌﹒⪩⪨﹒◎﹒⊹﹒ᶻ﹕→ ．(＞。☆)﹔⇆﹒ꜛ﹒░﹒❥﹒？﹒！﹒◍﹒﹏﹒✦﹒⟡﹒＞＜﹒◌﹒⿴﹒✧﹒𖥔﹒%﹒﹙﹚﹒◜◡◝﹒ꜝꜝ﹒⟡﹒⪩⪨﹒☓﹒⬦﹒✦﹒◈﹒✶﹒⬙﹒⟡﹒⇆﹒♡﹒﹢﹒ᶻ﹒✹﹒﹢﹒✶﹑〇﹐罒﹢♡﹒⇆﹑⬚﹐ᶻ﹒❀﹐✶﹒▹﹒◖﹒✩﹒∇﹒▨﹐◌﹐❀﹒⿴﹒✿﹢﹐░﹒ᶻz﹐☆﹒⊂⊃﹑ⵌ﹒▦﹒✿﹒⺌﹒◂﹒⿴﹒❰❰﹒♡﹒ᶻz﹒❥﹒⩇﹒⊞﹐ʬʬ﹒♢﹐ᐢ..ᐢ﹐✩﹒ᶻz﹒❥﹒⟡﹒✷﹒✕﹐〇﹐✿﹒Ꜣ﹒⟡﹒˃̵ᴗ˂̵﹒♡﹐≋﹒⊂⊃﹒ᐢᗜᐢ﹒❀﹒﹢﹒⇵﹒⪨﹕↺﹐✿﹒Ꜣ﹒✶﹐≋﹒⇆﹐ʬʬ﹒﹗﹐➜﹒⬦﹕ᶻz﹒✦﹒﹢﹒▢﹒░﹒⭔﹒ʬʬ﹒✿﹒☰﹐◖◗﹒？﹒✶﹒﹏﹒ꕀ﹑ᵔᴗᵔ﹒ᗢ﹒✿﹐⊂⊃﹒ᐢᗜᐢ﹒ꕀ﹐リ﹐口﹐ꕀ﹒（｀δ´）﹒口，✿﹐⊂⊃﹒ᐢᗜᐢ﹒░﹒𖦹﹐゛✿﹑（｀δ´）﹒イ。ꕀ﹑リ﹐⊂⊃﹒ꔠ﹒口﹐･ᴗ･﹒░﹑リ﹒◐﹐、﹕✧﹒✶﹔？﹐ʬʬ﹒▹﹒❀﹒⭔﹒▿﹒⺡﹒✿﹒﹢﹒░﹑⬦﹒૪ ﹒〹﹒罒﹒ᶻz﹒◎﹐ꕀ﹒◖◗﹒⺌﹒〣﹒ᗢ﹒⺌﹒⿸﹑ꔠ﹒❀﹒➜﹒▦﹒◐﹒✷﹒◉﹒⿴﹒⿻﹒✦﹒★﹒☆﹒ıllı﹢☆﹒❀﹕▧﹒⟡﹒★﹕ıllı﹒▒﹒◎﹐☆﹒ꕀ﹐➜﹒⪩﹒〇﹐➜﹒★﹕◐﹒％﹕▧﹒⊂⊃﹒♡﹒ꕀ﹒ᶻz﹒₊ˎ✧﹒⪩﹒˃ᴗ˂﹕˃ᗜ˂﹕⿴﹒ᶻz﹒☆﹔⿴﹒✶﹒ᵔᴗᵔ﹒➜﹒⭔﹕⪩⪨﹢◒﹒◎﹒✿﹒⊂⊃﹔♡﹒◍﹒✦﹒⪩⪨﹒▧﹒⟡﹕➜﹐▦﹐✦﹒✶﹐﹢﹒ㄑ﹕ꕀ﹒＞＜﹐ꔠ﹐✿﹐×﹐丶﹐＞︿﹒リ﹕﹢﹐﹔★﹒ᶻz﹒⿴﹒⭔﹒✿﹒⊹﹒⭔﹒⨯﹒➜﹒★﹒◞﹒◟◝﹒◜﹒﹪﹒→﹐ıllı﹒★﹒✦﹒⌕﹒⌗﹒✿﹒⊹﹒✸﹒❍﹒⭓﹒◒﹒﹏﹒₊﹒▹﹒ᶻz﹒％﹒◖﹒░﹒ʬʬ﹒⿴﹒⫘﹒◎﹒⨳﹒⌕﹕★﹒☆﹒⌗﹐﹪﹐⌯﹐﹟﹐◐﹒▒﹒◎﹒⇆﹒☆﹒❀﹒☆﹒ıllı﹒↺﹒◍﹒✶﹒ᵔᴗᵔ﹒░﹒⇵﹒▧﹒◍﹒♡﹕❀﹑⿸﹕▞﹒✿﹒╰﹒░﹐◎﹒♡﹒◜ᴗ◝﹒˃ᴗ˂ ♡﹐﹅﹒✿﹒⊞﹒ıllı﹒♡﹒⊞﹕▞﹒✿﹒❀﹒⌕﹒⿸﹒✶﹒❀﹒✷﹒✸﹒▒﹒ᶻz﹒✿﹐♡﹐❀﹒░﹒⇵﹒▨﹕◍﹒♡﹒⌕﹒˃̵ᴗ˂̵﹑♡﹒✿﹒◍﹒⊞﹒∇﹒✶﹒ᵔᴗᵔ﹒◎﹒⇆﹒☆﹒@﹒˘ᗜ˘﹒☆﹔⿴﹒⪩﹐ᶻz﹒➜﹒⪩﹔◖﹐❀﹕⿸﹔﹢﹑ᐢᗜᐢ﹒⊂⊃﹑✿﹒◎﹒イ﹐ꕀ﹒˃̵ᴗ˂̵﹒✶﹒ꕀ﹒▦﹐⊂⊃﹒⇆﹒☆﹒⬚﹒❀﹕➜﹒⪩﹒ᗢ﹒◍﹒⊞﹒∇﹒✶﹒ᵔᴗᵔ﹒◎﹒ᶻz﹒⪨﹒✶﹑✹﹒⪩。ꕀ﹒✿﹒リ﹒⊞﹒⟡﹒⿴﹒☓﹐⊂⊃﹒➜﹒⟡﹒⪩⪨﹒･ᴗ･﹒ꕀ﹒ᶻz﹒✿﹒◎﹒☓﹒☆﹔リ﹒˃̵ᴗ˂̵﹒✶﹑ꕀ﹒▦﹒リ﹐⇆﹒☆﹒⬚﹒❀﹕➜﹒⪩﹒〇﹒◍﹒⊞﹒∇﹒✶﹒ᵔᴗᵔ﹒◎﹒ᶻz﹒⪨﹒✶﹑✹﹒⪩﹒ꕀ﹒✿﹔➜﹐﹏﹐★☆﹒┆︎﹒⩇﹒✿﹔✸﹕♡﹐◌﹒❥﹐％﹑〹．ʬʬ﹕੭﹐♢﹒口﹒⇣⇡﹒☆﹔⌗﹒⪩﹐ᶻ﹒➜﹒⪩﹔◖﹐❀﹕⿸﹑ᐢᗜᐢ﹒⊂⊃﹑✿﹒！﹒◎﹒リ﹐ꔠ﹐✿﹑∇﹒イ﹐ꕀ﹒˃̵ᴗ˂̵﹒✶﹑﹒ꕀ﹒▦﹒⊂⊃﹒⇆﹒☆﹒⬚﹒❀﹕➜﹒⪩﹒⩇﹕✿﹒ʬʬ﹕口﹐〇﹒◍﹒⊞﹒∇﹒✶﹒ᵔᴗᵔ﹒◎﹒ᶻz﹒⪨﹒✶﹑✹﹒⪩﹐ꕀ﹒✿﹒⊞﹒⟡﹒⿸﹑␥﹒♡﹕リ﹒☓﹐⊂⊃﹒➜﹒⟡﹒⪩⪨﹒･ᴗ･﹒ꕀ﹒ᶻz﹒✿﹒☓﹒✩﹒⊞﹕❀﹑◌﹒⊞﹒✸﹕⌗﹕★﹒ᶻz﹒✦﹒★☆﹒ıllı﹢☆﹕❀﹒▧﹒⟡﹒★﹕ıllı﹐▒﹒◎﹐☆﹒ꕀ﹔➜﹒⪩﹒〇﹐➜﹒★﹕◐﹒％﹐⊂⊃﹒♡﹒ꕀ﹒ᶻz﹒✧﹒˃̵ᴗ˂̵﹕˃ᗜ˂﹒ꕀ﹒ᶻz﹒☆﹔⿴﹒✶﹒ᵔᴗᵔ﹒➜﹒⭔﹕⪩⪨﹐﹢﹐◒﹒⊂⊃﹔♡﹒◍﹒✦﹒⪩⪨﹒▧﹒⟡﹕➜﹐▦﹒✦﹒✶﹐ㄑ﹕ꕀ﹒＞＜﹐ꔠ﹑ꕤ﹒░﹒◖﹒⟡﹒❀﹒→﹒⿴﹒⿻﹒⊞﹒♡﹒ᵔᴗᵔ﹒︴﹒✶﹒⭔﹐𓆩♡𓆪﹒リ﹒Ꮺ﹒キ﹒ꗃ﹒⿶﹒⌓﹒〹﹒⧅﹒◆﹒▽﹒ᐢ..ᐢ﹒⬙﹒⎙﹒◈﹒▣﹒ᶻz﹒⟢﹒ʬʬ﹒⊹﹒✷﹒◉﹒⿸﹒✶﹒❀﹒✷﹒⿻﹒⌇﹒ᵔᴗᵔ﹒◍﹒▿﹒⤸﹒○﹒░﹒⇵﹒☆﹒@﹒˘ᗜ˘﹒⬚﹒✸﹒▧﹒◎﹒♡﹒◜ᴗ◝﹒✸﹒ᵔᴗᵔ﹒✿﹑⟡﹒❀﹒★﹒➔﹒％﹒ᗜ﹔﹒⌗﹒﹪﹒﹒⟢﹒ᵔᴗᵔ﹒✮﹒^..^﹒✵﹒
+    「 (You can put emojis or other speical characters inside 2 of these paired looking characters) 」─── ⋆⋅☆⋅⋆ ──⫘⫘⫘⫘⫘⫘╭─𒌋𒀖╰─𒌋𒀖╰┈➤╭┈➤⊱  ۫ ׅ ✧
     Categories have a channels list.
     Only announcement-channel and stage-channel lack private key.
-    Example: {json.dumps({'template': [{'type': 'text-channel', 'name': 'general', 'private': "(this is a boolean, false/true according to the channel)"}]})}
+    Example:
+    {
+        "template": [
+            {
+            "type": "announcement-channel",
+            "name": "server-announcements"
+            },
+            {
+            "type": "stage-channel",
+            "name": "music-events"
+            },
+            {
+            "type": "category",
+            "name": "Community",
+            "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)',
+            "channels": [
+                {
+                "type": "text-channel",
+                "name": "general",
+                "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)'
+                },
+                {
+                "type": "text-channel",
+                "name": "admin-general",
+                "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be true)'
+                },
+                {
+                "type": "forum-channel",
+                "name": "general-forum",
+                "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)'
+                },
+                {
+                "type": "forum-channel",
+                "name": "admin-general-forum",
+                "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be true)'
+                }
+            ]
+            },
+            {
+            "type": "category",
+            "name": "Voice Channels",
+            "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)',
+            "channels": [
+                {
+                "type": "voice-channel",
+                "name": "general-vc",
+                "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)'
+                },
+                {
+                "type": "voice-channel",
+                "name": "admin-general-vc",
+                "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be true)'
+                }
+            ]
+            },
+            {
+            "type": "text-channel",
+            "name": "public-stuff",
+            "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be false)'
+            },
+            {
+            "type": "text-channel",
+            "name": "private-stuff",
+            "private": '(false/true boolean here accoridng to the channel if its for public usage or only staff and admins, here it would be true)'
+            }
+        ]
+        }
     """
     response = together_client.chat.completions.create(
         model="meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
