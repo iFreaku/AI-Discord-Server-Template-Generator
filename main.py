@@ -193,8 +193,10 @@ async def generate_template(interaction: discord.Interaction, prompt: str):
     )
     try:
         template_json = json.loads(response.choices[0].message.content)
-    except (json.JSONDecodeError, AttributeError):
+        print(template_json)
+    except (json.JSONDecodeError, AttributeError) as e:
         embed = discord.Embed(title="Error", description="Invalid template format from AI. 😕", color=discord.Color.red())
+        embed.add_field(name="Error:", value=e, inline=False)
         await interaction.followup.send(embed=embed, allowed_mentions=discord.AllowedMentions(users=True))
         return
     if not validate_template(template_json["template"]):
