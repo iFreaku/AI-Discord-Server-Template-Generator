@@ -74,6 +74,8 @@ async def generate_template(interaction: discord.Interaction, prompt: str):
     Use types: category, text-channel, voice-channel, forum-channel, announcement-channel, stage-channel.
     You can use sepcial characters for designing the names of the categoreis and channels only when said by the user or asked for aesthetic or grudge or any other related themes!
     You can use emojis for designing the names of the categoreis and channels only when said by the user!
+    Be consistent with your design when creating channels and categories,
+    Each type of channel and category should be easily distinguishable.
     Categories have a channels list.
     Only announcement-channel and stage-channel lack private key.
     Example:
